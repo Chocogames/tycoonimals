@@ -106,6 +106,7 @@ tycoonimals.app = {
 		}
 		function onFileSystemFail(e) {
 			alert("onFileSystemFail");
+			alert(e);
 			for(var label in e) {
 				alert(label+": "+e[label]);
 			}
