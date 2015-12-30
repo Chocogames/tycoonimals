@@ -99,20 +99,24 @@ tycoonimals.app = {
     // Application Constructor
     start: function() {
 		// Load packs dynamically
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, onFileSystemFail);
 		function onFileSystemSuccess(fileSystem) {
-			fileSystem.root.getDirectory(cordova.file.applicationDirectory+"/packs", {create: false, exclusive: false}, getDirSuccess, fail);           
+			alert("onFileSystemSuccess");
+			fileSystem.root.getDirectory(cordova.file.applicationDirectory+"/packs", {create: false, exclusive: false}, getDirSuccess, onFileSystemFail);           
 		}
-		function getDirFail(e) {
+		function onFileSystemFail(e) {
+			alert("onFileSystemFail");
 			alert(e.message);
 		}
 		function getDirSuccess(dirEntry) {
+			alert("getDirSuccess");
 			// Get a directory reader
 			var directoryReader = dirEntry.createReader();
 			// Get a list of all the entries in the directory
-			directoryReader.readEntries(readerSuccess,fail);
+			directoryReader.readEntries(readerSuccess,onFileSystemFail);
 		}
 		function readerSuccess(results) {
+			alert("readerSuccess");
 			alert(results);
 		}
 		//TODO: Load saved game
