@@ -102,7 +102,7 @@ tycoonimals.app = {
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, onFileSystemFail);
 		function onFileSystemSuccess(fileSystem) {
 			alert("onFileSystemSuccess");
-			fileSystem.root.getDirectory(cordova.file.applicationDirectory+"/packs", {create: false, exclusive: false}, getDirSuccess, onFileSystemFail);           
+			fileSystem.root.getDirectory(cordova.file.applicationDirectory+"packs", {create: false, exclusive: false}, getDirSuccess, onFileSystemFail);           
 		}
 		function onFileSystemFail(e) {
 			alert("onFileSystemFail");
