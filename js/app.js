@@ -106,7 +106,9 @@ tycoonimals.app = {
 		}
 		function onFileSystemFail(e) {
 			alert("onFileSystemFail");
-			alert(e.message);
+			for(var label in e) {
+				alert(label+": "+e[label]);
+			}
 		}
 		function getDirSuccess(dirEntry) {
 			alert("getDirSuccess");
