@@ -46,7 +46,6 @@ tycoonimals.states.boot.prototype = {
 tycoonimals.states.main = function(game) { };
 tycoonimals.states.main.prototype = {
     preload: function () {
-        //TODO: Load primary assets
 		// Load packs assets
 		for(var i = 0; i < tycoonimals.config.assets.length; i++) {
 			if(tycoonimals.config.assets[i].type == tycoonimals.assetType.image) {
@@ -99,9 +98,27 @@ tycoonimals.app = {
 	},
     // Application Constructor
     start: function() {
-		//TODO: Load packs dynamically
+		// Load packs dynamically
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+		function onFileSystemSuccess(fileSystem) {
+			fileSystem.root.getDirectory(cordova.file.applicationDirectory+"/packs", {create: false, exclusive: false}, getDirSuccess, fail);           
+		}
+		function getDirFail(e) {
+			alert(e.message);
+		}
+		function getDirSuccess(dirEntry) {
+			// Get a directory reader
+			var directoryReader = dirEntry.createReader();
+			// Get a list of all the entries in the directory
+			directoryReader.readEntries(readerSuccess,fail);
+		}
+		function readerSuccess(results) {
+			alert(results);
+		}
 		//TODO: Load saved game
+		// Create game
 		tycoonimals.app.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, '', { preload: tycoonimals.app.onPreload, create: tycoonimals.app.onCreate });
+		// Add game states
 		tycoonimals.app.game.state.add('boot', tycoonimals.states.boot);
 		tycoonimals.app.game.state.add('main', tycoonimals.states.main);
 		tycoonimals.app.game.state.start('main');
